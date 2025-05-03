@@ -1,7 +1,16 @@
 package trainings
 
+import (
+	"time"
+
+	personaldata "github.com/eugenii/GO_SPRINT_05/internal/personaldata"
+)
+
 type Training struct {
-	// TODO: добавить поля
+	Steps        int
+	TrainingType string
+	Duration     time.Duration
+	Person       personaldata.Personal
 }
 
 func (t *Training) Parse(datastring string) (err error) {
