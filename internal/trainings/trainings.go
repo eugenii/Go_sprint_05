@@ -2,8 +2,8 @@ package trainings
 
 import (
 	"time"
-
-	personaldata "github.com/eugenii/GO_SPRINT_05/internal/personaldata"
+	//"internal/personaldata"
+	personaldata "github.com/eugenii/Go_sprint_05/internal/personaldata"
 )
 
 type Training struct {
@@ -20,3 +20,4 @@ func (t *Training) Parse(datastring string) (err error) {
 func (t Training) ActionInfo() (string, error) {
 	// TODO: реализовать функцию
 }
+
