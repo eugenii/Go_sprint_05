@@ -6,7 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/eugenii/Go_sprint_05/internal/personaldata"
+	"github.com/Yandex-Practicum/tracker/internal/personaldata"
+	"github.com/Yandex-Practicum/tracker/internal/spentenergy"
 )
 
 type Training struct {
@@ -38,8 +39,29 @@ func (t *Training) Parse(datastring string) (err error) {
 		return fmt.Errorf("invalid duration value")
 	}
 	t.Duration = duration
+	return nil
 }
 
 func (t Training) ActionInfo() (string, error) {
-	// TODO: реализовать функцию
+	var (
+		calories float64
+		err      error
+	)
+	distance := spentenergy.Distance(t.Steps, t.Personal.Height)
+	speed := spentenergy.MeanSpeed(t.Steps, t.Personal.Height, t.Duration)
+	if t.TrainingType == "Бег" {
+		calories, err = spentenergy.RunningSpentCalories(t.Steps, t.Personal.Weight, t.Personal.Height, t.Duration)
+	} else if t.TrainingType == "Ходьба" {
+		calories, err = spentenergy.WalkingSpentCalories(t.Steps, t.Personal.Weight, t.Personal.Height, t.Duration)
+	} else {
+		return "", fmt.Errorf("неизвестный тип тренировки")
+	}
+	if err != nil {
+		return "", err
+	}
+	hours := t.Duration.Hours()
+	formattedDuration := fmt.Sprintf("%.2f ч.", hours)
+	return fmt.Sprintf(
+		"Тип тренировки: %s\nДлительность: %s\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n",
+		t.TrainingType, formattedDuration, distance, speed, calories), nil
 }
