@@ -17,7 +17,7 @@ type DaySteps struct {
 }
 
 func (ds *DaySteps) Parse(datastring string) (err error) {
-	// "678,0h50m"
+	// "678,0h50m" - пример ввода
 	parts := strings.Split(datastring, ",")
 	if len(parts) != 2 {
 		return fmt.Errorf("invalid data format")
@@ -41,6 +41,7 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 }
 
 func (ds DaySteps) ActionInfo() (string, error) {
+	// Пример вывода:
 	// Количество шагов: 792.
 	// Дистанция составила 0.51 км.
 	// Вы сожгли 221.33 ккал.
