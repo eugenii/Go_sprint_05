@@ -49,15 +49,16 @@ func (t Training) ActionInfo() (string, error) {
 	)
 	distance := spentenergy.Distance(t.Steps, t.Personal.Height)
 	speed := spentenergy.MeanSpeed(t.Steps, t.Personal.Height, t.Duration)
-	if t.TrainingType == "Бег" {
+	switch t.TrainingType {
+	case "Бег":
 		calories, err = spentenergy.RunningSpentCalories(t.Steps, t.Personal.Weight, t.Personal.Height, t.Duration)
-	} else if t.TrainingType == "Ходьба" {
+	case "Ходьба":
 		calories, err = spentenergy.WalkingSpentCalories(t.Steps, t.Personal.Weight, t.Personal.Height, t.Duration)
-	} else {
+	default:
 		return "", fmt.Errorf("неизвестный тип тренировки")
 	}
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("ошибка вычисления калорий")
 	}
 	hours := t.Duration.Hours()
 	formattedDuration := fmt.Sprintf("%.2f ч.", hours)

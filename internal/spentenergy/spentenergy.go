@@ -22,8 +22,18 @@ func WalkingSpentCalories(steps int, weight, height float64, duration time.Durat
 }
 
 func RunningSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
-	if steps <= 0 || duration <= 0 || weight <= 0 || height <= 0 {
-		return 0, fmt.Errorf("invalid input data")
+
+	if steps <= 0 {
+		return 0, fmt.Errorf("invalid steps")
+	}
+	if duration <= 0 {
+		return 0, fmt.Errorf("invalid duration")
+	}
+	if weight <= 0 {
+		return 0, fmt.Errorf("invalid weight")
+	}
+	if height <= 0 {
+		return 0, fmt.Errorf("invalid height")
 	}
 	meanSpeed := MeanSpeed(steps, height, duration)
 	return meanSpeed * weight * duration.Minutes() / minInH, nil
